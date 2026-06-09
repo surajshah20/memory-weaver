@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
   Star, ArrowRight, Truck, Menu, X,
@@ -73,10 +73,10 @@ function Nav() {
           <a href="#faq" className="hover:text-rose transition">FAQ</a>
         </nav>
         <div className="hidden md:flex items-center gap-3">
-          <a href="#" className="text-sm font-medium hover:text-rose">Sign in</a>
-          <a href="#pricing" className="inline-flex items-center gap-2 bg-ink text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-rose transition">
+          <Link to="/login" className="text-sm font-medium hover:text-rose">Sign in</Link>
+          <Link to="/signup" className="inline-flex items-center gap-2 bg-ink text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-rose transition">
             Get Started
-          </a>
+          </Link>
         </div>
         <button onClick={() => setOpen(!open)} className="md:hidden p-2">
           {open ? <X className="size-5" /> : <Menu className="size-5" />}

@@ -9,12 +9,51 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UploadRouteImport } from './routes/upload'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as ReadyRouteImport } from './routes/ready'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as EditorRouteImport } from './routes/editor'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as CreateRouteImport } from './routes/create'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CreateTripInfoRouteImport } from './routes/create.trip-info'
+import { Route as CreateTemplateRouteImport } from './routes/create.template'
+import { Route as CreateModeRouteImport } from './routes/create.mode'
 
+const UploadRoute = UploadRouteImport.update({
+  id: '/upload',
+  path: '/upload',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReadyRoute = ReadyRouteImport.update({
+  id: '/ready',
+  path: '/ready',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EditorRoute = EditorRouteImport.update({
+  id: '/editor',
+  path: '/editor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CreateRoute = CreateRouteImport.update({
+  id: '/create',
+  path: '/create',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -22,40 +61,164 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CreateTripInfoRoute = CreateTripInfoRouteImport.update({
+  id: '/trip-info',
+  path: '/trip-info',
+  getParentRoute: () => CreateRoute,
+} as any)
+const CreateTemplateRoute = CreateTemplateRouteImport.update({
+  id: '/template',
+  path: '/template',
+  getParentRoute: () => CreateRoute,
+} as any)
+const CreateModeRoute = CreateModeRouteImport.update({
+  id: '/mode',
+  path: '/mode',
+  getParentRoute: () => CreateRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/create': typeof CreateRouteWithChildren
+  '/dashboard': typeof DashboardRoute
+  '/editor': typeof EditorRoute
   '/login': typeof LoginRoute
+  '/ready': typeof ReadyRoute
+  '/signup': typeof SignupRoute
+  '/upload': typeof UploadRoute
+  '/create/mode': typeof CreateModeRoute
+  '/create/template': typeof CreateTemplateRoute
+  '/create/trip-info': typeof CreateTripInfoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/create': typeof CreateRouteWithChildren
+  '/dashboard': typeof DashboardRoute
+  '/editor': typeof EditorRoute
   '/login': typeof LoginRoute
+  '/ready': typeof ReadyRoute
+  '/signup': typeof SignupRoute
+  '/upload': typeof UploadRoute
+  '/create/mode': typeof CreateModeRoute
+  '/create/template': typeof CreateTemplateRoute
+  '/create/trip-info': typeof CreateTripInfoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/create': typeof CreateRouteWithChildren
+  '/dashboard': typeof DashboardRoute
+  '/editor': typeof EditorRoute
   '/login': typeof LoginRoute
+  '/ready': typeof ReadyRoute
+  '/signup': typeof SignupRoute
+  '/upload': typeof UploadRoute
+  '/create/mode': typeof CreateModeRoute
+  '/create/template': typeof CreateTemplateRoute
+  '/create/trip-info': typeof CreateTripInfoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login'
+  fullPaths:
+    | '/'
+    | '/create'
+    | '/dashboard'
+    | '/editor'
+    | '/login'
+    | '/ready'
+    | '/signup'
+    | '/upload'
+    | '/create/mode'
+    | '/create/template'
+    | '/create/trip-info'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login'
-  id: '__root__' | '/' | '/login'
+  to:
+    | '/'
+    | '/create'
+    | '/dashboard'
+    | '/editor'
+    | '/login'
+    | '/ready'
+    | '/signup'
+    | '/upload'
+    | '/create/mode'
+    | '/create/template'
+    | '/create/trip-info'
+  id:
+    | '__root__'
+    | '/'
+    | '/create'
+    | '/dashboard'
+    | '/editor'
+    | '/login'
+    | '/ready'
+    | '/signup'
+    | '/upload'
+    | '/create/mode'
+    | '/create/template'
+    | '/create/trip-info'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CreateRoute: typeof CreateRouteWithChildren
+  DashboardRoute: typeof DashboardRoute
+  EditorRoute: typeof EditorRoute
   LoginRoute: typeof LoginRoute
+  ReadyRoute: typeof ReadyRoute
+  SignupRoute: typeof SignupRoute
+  UploadRoute: typeof UploadRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/upload': {
+      id: '/upload'
+      path: '/upload'
+      fullPath: '/upload'
+      preLoaderRoute: typeof UploadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ready': {
+      id: '/ready'
+      path: '/ready'
+      fullPath: '/ready'
+      preLoaderRoute: typeof ReadyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/editor': {
+      id: '/editor'
+      path: '/editor'
+      fullPath: '/editor'
+      preLoaderRoute: typeof EditorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/create': {
+      id: '/create'
+      path: '/create'
+      fullPath: '/create'
+      preLoaderRoute: typeof CreateRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -65,12 +228,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/create/trip-info': {
+      id: '/create/trip-info'
+      path: '/trip-info'
+      fullPath: '/create/trip-info'
+      preLoaderRoute: typeof CreateTripInfoRouteImport
+      parentRoute: typeof CreateRoute
+    }
+    '/create/template': {
+      id: '/create/template'
+      path: '/template'
+      fullPath: '/create/template'
+      preLoaderRoute: typeof CreateTemplateRouteImport
+      parentRoute: typeof CreateRoute
+    }
+    '/create/mode': {
+      id: '/create/mode'
+      path: '/mode'
+      fullPath: '/create/mode'
+      preLoaderRoute: typeof CreateModeRouteImport
+      parentRoute: typeof CreateRoute
+    }
   }
 }
 
+interface CreateRouteChildren {
+  CreateModeRoute: typeof CreateModeRoute
+  CreateTemplateRoute: typeof CreateTemplateRoute
+  CreateTripInfoRoute: typeof CreateTripInfoRoute
+}
+
+const CreateRouteChildren: CreateRouteChildren = {
+  CreateModeRoute: CreateModeRoute,
+  CreateTemplateRoute: CreateTemplateRoute,
+  CreateTripInfoRoute: CreateTripInfoRoute,
+}
+
+const CreateRouteWithChildren =
+  CreateRoute._addFileChildren(CreateRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CreateRoute: CreateRouteWithChildren,
+  DashboardRoute: DashboardRoute,
+  EditorRoute: EditorRoute,
   LoginRoute: LoginRoute,
+  ReadyRoute: ReadyRoute,
+  SignupRoute: SignupRoute,
+  UploadRoute: UploadRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
