@@ -59,11 +59,11 @@ function Nav() {
   return (
     <header className={`fixed top-0 inset-x-0 z-50 transition-all ${scrolled ? "glass shadow-sm" : "bg-transparent"}`}>
       <div className="max-w-7xl mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
-        <a href="#" className="font-display text-2xl tracking-tight flex items-center gap-2">
-          <span className="inline-flex size-7 items-center justify-center rounded-md bg-rose text-white">
-            <BookOpen className="size-4" strokeWidth={2.5} />
+        <a href="#" className="flex items-center gap-2 group">
+          <span className="font-display text-2xl tracking-tight">
+            blush<span className="text-rose">book</span>
           </span>
-          Blushbook
+          <span className="inline-block w-1.5 h-1.5 rounded-full bg-rose mt-1" />
         </a>
         <nav className="hidden md:flex items-center gap-10 text-sm font-medium text-foreground/80">
           <a href="#bestsellers" className="hover:text-rose transition">Bestsellers</a>
