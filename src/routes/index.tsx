@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
-  Search, ShoppingBag, Menu, X, Star, ArrowRight,
-  Upload, Wand2, Eye, Package, Check, Plus, Minus,
-  Instagram, Facebook, Youtube, Twitter,
+  Star, ArrowRight, Truck, Menu, X,
+  CloudUpload, Wand2, Eye, Printer,
+  Check, X as XIcon, ChevronDown,
+  Instagram, Facebook, Youtube,
 } from "lucide-react";
 import heroLandscape from "@/assets/hero-landscape.jpg";
 import heroCouple from "@/assets/hero-couple.jpg";
@@ -17,10 +18,10 @@ import storyFlower from "@/assets/story-flower.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Lumina — Premium Custom Photobooks & Magazines" },
-      { name: "description", content: "Turn your memories into beautiful stories with custom photobooks, magazines, wedding albums and love story books — handcrafted, premium print." },
-      { property: "og:title", content: "Lumina — Premium Custom Photobooks" },
-      { property: "og:description", content: "Custom photobooks, magazines and wedding albums, handcrafted to last." },
+      { title: "LUMINA | Premium Photobook & Magazine Store" },
+      { name: "description", content: "Create personalized photobooks, magazines, travel journals, wedding albums and memory collections. High-end editorial design with premium print quality." },
+      { property: "og:title", content: "LUMINA — Premium Photobooks & Magazines" },
+      { property: "og:description", content: "Turn your memories into beautiful stories with custom photobooks and magazines." },
     ],
   }),
   component: Home,
@@ -28,12 +29,12 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   return (
-    <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    <main className="min-h-screen bg-background text-foreground overflow-x-hidden scroll-smooth">
       <Nav />
       <Hero />
       <Collections />
       <Storytelling />
-      <HowItWorks />
+      <Process />
       <Testimonials />
       <Pricing />
       <FAQ />
@@ -48,58 +49,35 @@ function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  const links = ["Home", "Collections", "How It Works", "Pricing", "Stories", "Contact"];
-
   return (
-    <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
-      scrolled ? "py-3 backdrop-blur-xl bg-rose-tint/85 border-b border-rose-soft/60" : "py-5 bg-transparent"
-    }`}>
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        <a href="#" className="font-display text-2xl tracking-tight text-primary">LUMINA</a>
-
-        <nav className="hidden lg:flex items-center gap-9">
-          {links.map((l) => (
-            <a key={l} href={`#${l.toLowerCase().replace(/\s+/g, "-")}`}
-              className="text-sm text-foreground/80 hover:text-primary transition-colors">
-              {l}
-            </a>
-          ))}
+    <header className={`fixed top-0 inset-x-0 z-50 transition-all ${scrolled ? "glass shadow-sm" : "bg-transparent"}`}>
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
+        <a href="#" className="font-display text-2xl tracking-tight">LUMINA</a>
+        <nav className="hidden md:flex items-center gap-10 text-sm font-medium text-foreground/80">
+          <a href="#collections" className="hover:text-rose transition">Collections</a>
+          <a href="#process" className="hover:text-rose transition">How it Works</a>
+          <a href="#pricing" className="hover:text-rose transition">Pricing</a>
+          <a href="#faq" className="hover:text-rose transition">FAQ</a>
         </nav>
-
-        <div className="flex items-center gap-2">
-          <button aria-label="Search" className="hidden sm:grid size-10 place-items-center rounded-full hover:bg-rose-soft/60 transition">
-            <Search className="size-4" />
-          </button>
-          <button aria-label="Cart" className="hidden sm:grid size-10 place-items-center rounded-full hover:bg-rose-soft/60 transition">
-            <ShoppingBag className="size-4" />
-          </button>
-          <a href="#collections" className="hidden md:inline-flex items-center gap-1.5 rounded-full bg-primary text-primary-foreground px-5 py-2.5 text-sm font-medium hover:opacity-90 transition">
-            Create Your Book
-          </a>
-          <button aria-label="Menu" onClick={() => setOpen(!open)} className="lg:hidden size-10 grid place-items-center rounded-full hover:bg-rose-soft/60">
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
-          </button>
-        </div>
+        <a href="#pricing" className="hidden md:inline-flex items-center gap-2 bg-rose text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-rose/90 transition">
+          Start Designing
+        </a>
+        <button onClick={() => setOpen(!open)} className="md:hidden p-2">
+          {open ? <X className="size-5" /> : <Menu className="size-5" />}
+        </button>
       </div>
-
       {open && (
-        <div className="lg:hidden mt-3 mx-6 rounded-2xl bg-background border border-rose-soft p-4 shadow-soft animate-fade-up">
-          <div className="flex flex-col gap-1">
-            {links.map((l) => (
-              <a key={l} href={`#${l.toLowerCase().replace(/\s+/g, "-")}`} onClick={() => setOpen(false)} className="px-3 py-2.5 rounded-lg hover:bg-rose-soft/50 text-sm">
-                {l}
-              </a>
-            ))}
-            <a href="#collections" className="mt-2 inline-flex items-center justify-center gap-1.5 rounded-full bg-primary text-primary-foreground px-5 py-3 text-sm font-medium">
-              Create Your Book
-            </a>
-          </div>
+        <div className="md:hidden glass border-t border-border px-6 py-4 flex flex-col gap-3 text-sm">
+          <a href="#collections" onClick={() => setOpen(false)}>Collections</a>
+          <a href="#process" onClick={() => setOpen(false)}>How it Works</a>
+          <a href="#pricing" onClick={() => setOpen(false)}>Pricing</a>
+          <a href="#faq" onClick={() => setOpen(false)}>FAQ</a>
+          <a href="#pricing" className="bg-rose text-white px-5 py-2.5 rounded-full text-center mt-2">Start Designing</a>
         </div>
       )}
     </header>
@@ -109,55 +87,48 @@ function Nav() {
 /* ---------- HERO ---------- */
 function Hero() {
   return (
-    <section id="home" className="relative bg-rose-tint pt-32 lg:pt-40 pb-24 lg:pb-32">
-      <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-[1.1fr_1fr] gap-12 items-center">
-        <div className="animate-fade-up">
-          <h1 className="text-balance text-[clamp(3.5rem,9vw,7.5rem)] leading-[0.92] font-display tracking-tight uppercase">
-            Turn<br />Your<br />Memories<br />Into<br />
-            <span className="font-serif-italic normal-case text-primary">Beautiful Stories</span>
+    <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-rose-tint grain overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-12 gap-10 items-center">
+        <div className="lg:col-span-7 animate-fade-up">
+          <h1 className="font-display uppercase text-[clamp(2.5rem,7vw,5.5rem)] leading-[0.95] tracking-tight text-ink">
+            Turn Your <br />
+            Memories Into <br />
+            <span className="font-serif-italic text-rose normal-case tracking-tight">Beautiful</span> Stories
           </h1>
-
-          <p className="mt-8 max-w-lg text-base text-foreground/70 leading-relaxed">
-            Create personalized photobooks, magazines, travel journals, wedding albums and memory collections — printed on premium paper, bound to last forever.
+          <p className="mt-8 max-w-xl text-foreground/70 text-lg leading-relaxed">
+            Create personalized photobooks, magazines, travel journals, wedding albums, and memory collections that last forever. High-end editorial design meets premium print quality.
           </p>
-
-          <div className="mt-9 flex flex-wrap items-center gap-3">
-            <a href="#collections" className="inline-flex items-center gap-2 rounded-full bg-ink text-white px-7 py-4 text-sm font-medium hover:opacity-90 transition">
+          <div className="mt-10 flex flex-wrap items-center gap-4">
+            <a href="#pricing" className="inline-flex items-center gap-2 bg-ink text-white px-7 py-4 rounded-full font-medium hover:bg-rose transition">
               Create Your Book <ArrowRight className="size-4" />
             </a>
-            <a href="#collections" className="inline-flex items-center gap-2 rounded-full border border-foreground/20 px-7 py-4 text-sm font-medium hover:bg-white/60 transition">
+            <a href="#collections" className="inline-flex items-center gap-2 px-7 py-4 rounded-full font-medium border border-ink/20 hover:border-ink transition">
               Explore Collections
             </a>
           </div>
-
-          <div className="mt-10 flex flex-wrap items-center gap-6">
+          <div className="mt-12 flex flex-wrap items-center gap-8 text-xs tracking-[0.18em] font-semibold text-ink/70">
             <div className="flex items-center gap-2">
-              <div className="flex items-center gap-0.5 text-primary">
-                {[...Array(5)].map((_, i) => <Star key={i} className="size-3.5 fill-current" />)}
-              </div>
-              <span className="text-xs text-foreground/70">4.9 Rated</span>
+              <Star className="size-4 fill-rose text-rose" />
+              4.9 RATING (2K+ REVIEWS)
             </div>
-            <div className="flex items-center gap-2 text-xs text-foreground/70">
-              <Package className="size-4 text-primary" /> Fast Worldwide Delivery
+            <div className="flex items-center gap-2">
+              <Truck className="size-4" />
+              WORLDWIDE DELIVERY
             </div>
           </div>
         </div>
 
-        {/* Polaroid stack */}
-        <div className="relative h-[460px] lg:h-[560px]">
-          <img
-            src={heroLandscape}
-            alt="Travel polaroid"
-            width={1024} height={1280}
-            className="absolute w-[62%] max-w-[360px] top-2 left-2 rotate-[-8deg] shadow-lift animate-float-slow"
-          />
-          <img
-            src={heroCouple}
-            alt="Couple polaroid"
-            loading="lazy" width={1024} height={1280}
-            className="absolute w-[60%] max-w-[340px] bottom-2 right-0 rotate-[6deg] shadow-lift animate-float-slow"
-            style={{ animationDelay: "1.5s" }}
-          />
+        <div className="lg:col-span-5 relative h-[520px] lg:h-[620px]">
+          <div className="absolute top-0 right-8 w-[260px] lg:w-[320px] rotate-[6deg] animate-float-slow" style={{ ["--tw-rotate" as never]: "6deg" }}>
+            <div className="bg-white p-3 pb-12 shadow-lift">
+              <img src={heroLandscape} alt="Travel photobook spread" className="w-full h-[320px] object-cover" />
+            </div>
+          </div>
+          <div className="absolute bottom-0 left-0 w-[240px] lg:w-[300px] -rotate-[5deg] animate-float-slow" style={{ ["--tw-rotate" as never]: "-5deg", animationDelay: "1.5s" }}>
+            <div className="bg-white p-3 pb-12 shadow-lift">
+              <img src={heroCouple} alt="Couple photobook" className="w-full h-[300px] object-cover" />
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -165,39 +136,34 @@ function Hero() {
 }
 
 /* ---------- COLLECTIONS ---------- */
-const COLLECTIONS = [
-  { label: "Bestseller", title: "Travel Photobook", img: colTravel, span: "h-[320px] md:h-[420px]" },
-  { label: "Editorial", title: "Custom Magazine", img: colMagazine, span: "h-[260px] md:h-[340px]" },
-  { label: "Heirloom", title: "Wedding Album", img: colWedding, span: "h-[320px] md:h-[420px]" },
-  { label: "Romance", title: "Love Story Book", img: colLove, span: "h-[260px] md:h-[340px]" },
+const collections = [
+  { title: "Travel Photobook", price: "FROM $49", img: colTravel },
+  { title: "Custom Magazine", price: "FROM $29", img: colMagazine },
+  { title: "Wedding Album", price: "FROM $89", img: colWedding },
+  { title: "Love Story Book", price: "FROM $39", img: colLove },
 ];
-
 function Collections() {
   return (
-    <section id="collections" className="py-24 lg:py-28 bg-background">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex items-end justify-between gap-4 mb-10">
+    <section id="collections" className="py-24 lg:py-32 bg-background">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="flex flex-wrap items-end justify-between gap-6 mb-14">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-primary font-semibold mb-3">Our Collections</p>
-            <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-display uppercase tracking-tight">Featured Collections</h2>
+            <p className="text-xs tracking-[0.25em] font-semibold text-rose mb-4">CURATED EXCELLENCE</p>
+            <h2 className="font-display text-5xl lg:text-7xl uppercase tracking-tight">Featured <br /><span className="font-serif-italic normal-case text-rose">Collections</span></h2>
           </div>
-          <a href="#" className="hidden md:inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.18em] text-primary font-semibold hover:opacity-80">
-            View All Collections <ArrowRight className="size-3.5" />
-          </a>
+          <a href="#" className="text-sm font-semibold tracking-[0.18em] border-b border-ink pb-1 hover:text-rose hover:border-rose transition">VIEW ALL CATEGORIES →</a>
         </div>
-
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 items-end">
-          {COLLECTIONS.map((c, i) => (
-            <article key={c.title} className={`group ${i % 2 === 1 ? "lg:translate-y-12" : ""}`}>
-              <div className={`relative rounded-3xl overflow-hidden bg-rose-soft ${c.span}`}>
-                <img src={c.img} alt={c.title} loading="lazy" width={1024} height={1280}
-                  className="size-full object-cover group-hover:scale-105 transition-transform duration-700" />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          {collections.map((c, i) => (
+            <a key={c.title} href="#" className={`group block ${i % 2 === 1 ? "lg:mt-16" : ""}`}>
+              <div className="overflow-hidden bg-rose-soft aspect-[3/4]">
+                <img src={c.img} alt={c.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               </div>
-              <div className="mt-4">
-                <p className="text-[10px] uppercase tracking-[0.2em] text-primary font-semibold">{c.label}</p>
-                <h3 className="mt-1.5 font-display text-lg uppercase tracking-tight">{c.title}</h3>
+              <div className="mt-5 flex items-end justify-between">
+                <h3 className="text-xl font-display uppercase tracking-tight">{c.title}</h3>
+                <span className="text-xs tracking-[0.18em] font-semibold text-foreground/60">{c.price}</span>
               </div>
-            </article>
+            </a>
           ))}
         </div>
       </div>
@@ -207,38 +173,30 @@ function Collections() {
 
 /* ---------- STORYTELLING ---------- */
 function Storytelling() {
-  const stats = [
-    { v: "10k+", l: "Books Created" },
-    { v: "4.9", l: "Customer Rating" },
-    { v: "3–5", l: "Days Delivery" },
-    { v: "100%", l: "Premium Print" },
-  ];
   return (
-    <section className="py-24 lg:py-32 bg-rose-soft/70">
-      <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-14 items-center">
-        <div className="grid grid-cols-2 gap-5">
-          <div className="aspect-square rounded-3xl overflow-hidden bg-background">
-            <img src={storySpread} alt="Open photobook spread" loading="lazy" width={1024} height={1024} className="size-full object-cover" />
-          </div>
-          <div className="aspect-square rounded-3xl overflow-hidden bg-background mt-10">
-            <img src={storyFlower} alt="Red gerbera" loading="lazy" width={1024} height={1024} className="size-full object-cover" />
-          </div>
+    <section className="py-24 lg:py-32 bg-rose-tint grain">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-2 gap-4">
+          <img src={storyFlower} alt="Detail" className="w-full h-[280px] lg:h-[400px] object-cover" />
+          <img src={storySpread} alt="Open spread" className="w-full h-[280px] lg:h-[400px] object-cover mt-12" />
         </div>
-
         <div>
-          <h2 className="text-[clamp(2rem,5vw,3.75rem)] font-display uppercase tracking-tight">
-            Every Memory<br />Deserves A <span className="font-serif-italic normal-case text-primary">Beautiful</span><br />
-            <span className="font-serif-italic normal-case text-primary">Home</span>
+          <h2 className="font-display text-5xl lg:text-6xl uppercase tracking-tight leading-none">
+            Every Memory <br />Deserves A <br /><span className="font-serif-italic text-rose normal-case">Beautiful Home</span>
           </h2>
-          <p className="mt-6 max-w-md text-foreground/70 leading-relaxed">
-            Our premium photobooks are crafted to be the best home for your most cherished moments — from family adventures and travels to weddings and milestones. Built to be opened, shared and passed down.
+          <p className="mt-8 text-foreground/70 leading-relaxed text-lg max-w-xl">
+            Our premium photobooks are designed to be heirloom-quality. We combine traditional craftsmanship with modern printing technology to ensure your most precious journeys and milestones are preserved in stunning detail for generations.
           </p>
-
-          <div className="mt-9 grid grid-cols-2 gap-4 max-w-md">
-            {stats.map((s) => (
-              <div key={s.l}>
-                <p className="font-display text-4xl text-primary">{s.v}</p>
-                <p className="text-xs uppercase tracking-[0.18em] text-foreground/60 mt-1.5">{s.l}</p>
+          <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-6 border-t border-ink/15 pt-8">
+            {[
+              ["10k+", "BOOKS CREATED"],
+              ["4.9", "CUSTOMER RATING"],
+              ["3-5", "DAYS DELIVERY"],
+              ["100%", "QUALITY GUARANTEE"],
+            ].map(([n, l]) => (
+              <div key={l}>
+                <div className="font-display text-4xl lg:text-5xl text-rose">{n}</div>
+                <div className="mt-2 text-[10px] tracking-[0.2em] font-semibold text-foreground/60">{l}</div>
               </div>
             ))}
           </div>
@@ -248,30 +206,30 @@ function Storytelling() {
   );
 }
 
-/* ---------- HOW IT WORKS ---------- */
-function HowItWorks() {
-  const steps = [
-    { icon: Upload, title: "Upload Photos", desc: "Drop in your favorite shots from phone, cloud or camera." },
-    { icon: Wand2, title: "Customize Layout", desc: "Choose a template or design every single spread your way." },
-    { icon: Eye, title: "Review Design", desc: "Preview the full book and every detail before you order." },
-    { icon: Package, title: "Print & Deliver", desc: "We hand-bind, print and ship — straight to your doorstep." },
-  ];
+/* ---------- PROCESS ---------- */
+const steps = [
+  { icon: CloudUpload, title: "Upload Photos", text: "Easily import your photos from your phone, computer, or Instagram." },
+  { icon: Wand2, title: "Customize Layout", text: "Choose a curated template or design every page with our intuitive editor." },
+  { icon: Eye, title: "Review Design", text: "See a digital 3D preview of your book before we send it to print." },
+  { icon: Printer, title: "Print & Deliver", text: "We print on luxury paper and deliver to your doorstep in recycled packaging." },
+];
+function Process() {
   return (
-    <section id="how-it-works" className="py-24 lg:py-32 bg-background">
-      <div className="max-w-6xl mx-auto px-6 text-center">
-        <p className="text-[11px] uppercase tracking-[0.22em] text-primary font-semibold mb-3">The Process</p>
-        <h2 className="text-[clamp(2rem,5vw,3.75rem)] font-display uppercase tracking-tight max-w-3xl mx-auto">
-          Simple, Seamless, Storytelling
-        </h2>
-
-        <div className="mt-20 grid grid-cols-2 lg:grid-cols-4 gap-y-16 gap-x-6">
+    <section id="process" className="py-24 lg:py-32 bg-background">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="text-center mb-16">
+          <p className="text-xs tracking-[0.25em] font-semibold text-rose mb-4">THE PROCESS</p>
+          <h2 className="font-display text-5xl lg:text-7xl uppercase tracking-tight">
+            Simple, Seamless, <br /><span className="font-serif-italic normal-case text-rose">Storytelling</span>
+          </h2>
+        </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {steps.map((s, i) => (
-            <div key={s.title} className={`flex flex-col items-center text-center ${i % 2 === 1 ? "lg:translate-y-14" : ""}`}>
-              <div className="size-16 rounded-full bg-rose-soft grid place-items-center text-primary mb-5">
-                <s.icon className="size-6" />
-              </div>
-              <h3 className="font-display text-lg uppercase tracking-tight">{i + 1}. {s.title}</h3>
-              <p className="text-sm text-foreground/65 mt-3 leading-relaxed max-w-[200px]">{s.desc}</p>
+            <div key={s.title} className={`p-8 border border-border rounded-2xl bg-card hover:bg-rose-tint hover:border-rose/40 transition ${i % 2 === 1 ? "lg:translate-y-8" : ""}`}>
+              <s.icon className="size-10 text-rose" strokeWidth={1.5} />
+              <div className="mt-8 text-xs tracking-[0.2em] font-semibold text-foreground/50">STEP 0{i + 1}</div>
+              <h3 className="mt-3 font-display text-2xl uppercase">{s.title}</h3>
+              <p className="mt-4 text-foreground/70 leading-relaxed">{s.text}</p>
             </div>
           ))}
         </div>
@@ -281,38 +239,33 @@ function HowItWorks() {
 }
 
 /* ---------- TESTIMONIALS ---------- */
-const TESTIMONIALS = [
-  { name: "Ananya Mehra", product: "Wedding Album", quote: "Holding our album felt like reliving the day all over again. The paper, the binding, the colors — it's the heirloom we'll pass down." },
-  { name: "Priya R.", product: "Travel Photobook", quote: "I turned three weeks across Italy into a coffee-table book my parents won't stop showing off. Quietly the best gift I've ever made." },
-  { name: "Aditi Kapoor", product: "Love Story Book", quote: "It didn't feel like a 'photo book' — it felt like a small publication about our love. Every spread was thoughtful and beautiful." },
+const testimonials = [
+  { quote: "The print quality surpassed my highest expectations. My wedding album looks like something from a gallery. LUMINA truly captures the soul of photography.", name: "SARAH JENKINS", role: "Wedding Album Project" },
+  { quote: "I've made travel journals before, but never with this level of design. The custom magazine format is so chic and professional. My Iceland trip feels legendary.", name: "MARCUS REED", role: "Travel Magazine Project" },
+  { quote: "It was so easy to create! I made a 'Year in Review' book for my family in under 20 minutes. The automated layouts are surprisingly artistic.", name: "ELENA VOGT", role: "Family Memory Book" },
 ];
-
 function Testimonials() {
   return (
-    <section id="stories" className="py-24 lg:py-32 bg-ink-deep text-white">
-      <div className="max-w-7xl mx-auto px-6">
-        <p className="text-[11px] uppercase tracking-[0.22em] text-primary font-semibold mb-4">Testimonials</p>
-        <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-display uppercase tracking-tight max-w-3xl">
-          What Creators Are Saying
-        </h2>
-
-        <div className="mt-14 grid md:grid-cols-3 gap-5">
-          {TESTIMONIALS.map((t, i) => (
-            <article key={i} className="rounded-3xl bg-white/5 border border-white/10 p-7 backdrop-blur">
-              <div className="flex items-center gap-0.5 text-primary mb-5">
-                {[...Array(5)].map((_, j) => <Star key={j} className="size-3.5 fill-current" />)}
+    <section className="py-24 lg:py-32 bg-ink-deep text-white grain">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="text-center mb-16">
+          <p className="text-xs tracking-[0.25em] font-semibold text-rose mb-4">TESTIMONIALS</p>
+          <h2 className="font-display text-5xl lg:text-7xl uppercase tracking-tight">
+            What Creators <br /><span className="font-serif-italic normal-case text-rose">Are Saying</span>
+          </h2>
+        </div>
+        <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+          {testimonials.map((t) => (
+            <div key={t.name} className="glass-dark rounded-2xl p-8 flex flex-col">
+              <div className="flex gap-1 mb-6">
+                {Array.from({ length: 5 }).map((_, i) => <Star key={i} className="size-4 fill-rose text-rose" />)}
               </div>
-              <p className="text-white/85 leading-relaxed text-sm">"{t.quote}"</p>
-              <div className="mt-7 pt-5 border-t border-white/10 flex items-center gap-3">
-                <div className={`size-10 rounded-full bg-gradient-to-br ${
-                  ["from-rose-300 to-pink-500", "from-amber-200 to-orange-400", "from-violet-300 to-pink-500"][i]
-                }`} />
-                <div>
-                  <p className="text-sm font-semibold">{t.name}</p>
-                  <p className="text-[11px] text-white/50">{t.product}</p>
-                </div>
+              <p className="text-white/85 leading-relaxed flex-1">"{t.quote}"</p>
+              <div className="mt-8 pt-6 border-t border-white/10">
+                <div className="font-display text-sm tracking-[0.15em]">{t.name}</div>
+                <div className="mt-1 text-xs text-white/50">{t.role}</div>
               </div>
-            </article>
+            </div>
           ))}
         </div>
       </div>
@@ -321,51 +274,41 @@ function Testimonials() {
 }
 
 /* ---------- PRICING ---------- */
-const PLANS = [
-  { name: "Classic", price: "$29", unit: "/book", features: ["Softcover Magazine", "40 Pages Included", "Standard Matte Paper", "Standard Shipping"], highlight: false, cta: "Choose Classic" },
-  { name: "Premium", price: "$59", unit: "/book", features: ["Hardcover Photobook", "60 Pages Included", "Luxe 200gsm Paper", "Premium Box Packaging"], highlight: true, cta: "Choose Premium" },
-  { name: "Luxury", price: "$129", unit: "/book", features: ["Leather + Foil Cover", "100 Pages Included", "Archival Giclée Print", "Express Shipping"], highlight: false, cta: "Choose Luxury" },
+const plans = [
+  { name: "ESSENTIAL", price: "$29", features: [["Softcover Magazine", true], ["40 Pages Included", true], ["Standard Matte Paper", true], ["Hardcover Options", false]], cta: "CHOOSE ESSENTIAL", featured: false },
+  { name: "COLLECTOR", price: "$59", features: [["Hardcover Linen Wrap", true], ["60 Pages Included", true], ["Lustre Silk Paper", true], ["Premium Box Packaging", true]], cta: "CHOOSE COLLECTOR", featured: true },
+  { name: "HEIRLOOM", price: "$129", features: [["Genuine Leather Cover", true], ["100 Pages Included", true], ["Archival Art Paper", true], ["Lay-Flat Binding", true]], cta: "CHOOSE HEIRLOOM", featured: false },
 ];
-
 function Pricing() {
   return (
-    <section id="pricing" className="py-24 lg:py-32 bg-background">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-14">
-          <p className="text-[11px] uppercase tracking-[0.22em] text-primary font-semibold mb-3">Choose Your Plan</p>
-          <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-display uppercase tracking-tight">Pricing Plans</h2>
+    <section id="pricing" className="py-24 lg:py-32 bg-rose-tint grain">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="text-center mb-16">
+          <p className="text-xs tracking-[0.25em] font-semibold text-rose mb-4">SELECT YOUR CANVAS</p>
+          <h2 className="font-display text-5xl lg:text-7xl uppercase tracking-tight">
+            Pricing <span className="font-serif-italic normal-case text-rose">Plans</span>
+          </h2>
         </div>
-
-        <div className="grid md:grid-cols-3 gap-5 items-stretch">
-          {PLANS.map((p) => (
-            <div key={p.name} className={`relative rounded-3xl p-8 flex flex-col ${
-              p.highlight
-                ? "bg-primary text-primary-foreground md:-translate-y-4 shadow-lift"
-                : "bg-background border border-rose-soft"
-            }`}>
-              {p.highlight && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-ink text-white text-[10px] uppercase tracking-[0.2em] font-semibold px-3 py-1 rounded-full">
-                  Most Popular
-                </span>
+        <div className="grid md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
+          {plans.map((p) => (
+            <div key={p.name} className={`relative rounded-3xl p-10 flex flex-col ${p.featured ? "bg-rose text-white shadow-lift scale-[1.03]" : "bg-white border border-border"}`}>
+              {p.featured && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-ink text-white px-4 py-1 rounded-full text-[10px] tracking-[0.2em] font-semibold">MOST POPULAR</div>
               )}
-              <p className={`text-[10px] uppercase tracking-[0.22em] font-semibold mb-3 ${p.highlight ? "text-white/85" : "text-primary"}`}>{p.name}</p>
-              <div className="flex items-baseline gap-1.5">
-                <span className="font-display text-5xl">{p.price}</span>
-                <span className={`text-sm ${p.highlight ? "text-white/70" : "text-foreground/60"}`}>{p.unit}</span>
+              <div className={`text-xs tracking-[0.25em] font-semibold ${p.featured ? "text-white/70" : "text-foreground/50"}`}>{p.name}</div>
+              <div className="mt-4 flex items-baseline gap-2">
+                <span className="font-display text-6xl">{p.price}</span>
+                <span className={`text-sm ${p.featured ? "text-white/70" : "text-foreground/50"}`}>/book</span>
               </div>
-              <ul className="mt-7 space-y-3 flex-1">
-                {p.features.map((f) => (
-                  <li key={f} className="flex items-start gap-2.5 text-sm">
-                    <Check className={`size-4 mt-0.5 shrink-0 ${p.highlight ? "text-white" : "text-primary"}`} />
-                    <span>{f}</span>
+              <ul className="mt-8 space-y-4 flex-1">
+                {p.features.map(([label, on]) => (
+                  <li key={label as string} className="flex items-center gap-3 text-sm">
+                    {on ? <Check className="size-4 shrink-0" /> : <XIcon className={`size-4 shrink-0 ${p.featured ? "text-white/40" : "text-foreground/30"}`} />}
+                    <span className={!on ? "opacity-50 line-through" : ""}>{label as string}</span>
                   </li>
                 ))}
               </ul>
-              <a href="#" className={`mt-8 inline-flex items-center justify-center gap-1.5 rounded-full px-6 py-3.5 text-sm font-medium transition ${
-                p.highlight
-                  ? "bg-white text-primary hover:opacity-90"
-                  : "border border-foreground/15 hover:bg-rose-soft/40"
-              }`}>
+              <a href="#" className={`mt-10 inline-flex justify-center items-center px-6 py-4 rounded-full text-xs tracking-[0.2em] font-semibold transition ${p.featured ? "bg-white text-rose hover:bg-ink hover:text-white" : "bg-ink text-white hover:bg-rose"}`}>
                 {p.cta}
               </a>
             </div>
@@ -377,46 +320,29 @@ function Pricing() {
 }
 
 /* ---------- FAQ ---------- */
-const FAQS = [
-  { q: "What is the typical shipping time?", a: "Most orders are printed, bound and shipped within 3–5 business days. Express options are available at checkout." },
-  { q: "Can I import photos directly from Instagram?", a: "Yes — connect your Instagram in the editor and pull photos in one tap. Cloud uploads from Google Drive and Dropbox are also supported." },
-  { q: "Do you offer discounts on bulk orders?", a: "Absolutely. For orders of 10+ books we offer tiered pricing — get in touch and we'll send a custom quote." },
-  { q: "What's the difference between Classic and Premium?", a: "Classic uses a softcover and standard matte paper. Premium upgrades to a hardcover, thicker 200gsm paper and includes premium box packaging." },
-  { q: "Can I preview the book before ordering?", a: "Yes — every order gets a full digital preview of every page before printing. Edit as much as you like before you confirm." },
+const faqs = [
+  { q: "What is the typical shipping time?", a: "We typically print and ship within 3-5 business days. International shipping varies by location but generally takes 7-10 business days." },
+  { q: "Can I import photos directly from Instagram?", a: "Yes! Our editor connects directly to Instagram, Google Photos, and Dropbox for seamless uploading." },
+  { q: "Do you offer design assistance?", a: "Our \"Auto-Curate\" feature uses AI to layout your book beautifully in seconds, which you can then fine-tune manually." },
 ];
-
 function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section id="contact" className="py-24 lg:py-32 bg-background">
-      <div className="max-w-3xl mx-auto px-6">
-        <div className="text-center mb-12">
-          <p className="text-[11px] uppercase tracking-[0.22em] text-primary font-semibold mb-3">FAQ</p>
-          <h2 className="text-[clamp(1.75rem,4.5vw,2.75rem)] font-display uppercase tracking-tight">Frequently Asked Questions</h2>
-        </div>
-        <div className="space-y-3">
-          {FAQS.map((f, i) => {
-            const isOpen = open === i;
-            return (
-              <div key={i} className="rounded-2xl border border-rose-soft bg-background overflow-hidden">
-                <button
-                  onClick={() => setOpen(isOpen ? null : i)}
-                  className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left hover:bg-rose-soft/30 transition"
-                  aria-expanded={isOpen}
-                >
-                  <span className="font-medium text-sm">{f.q}</span>
-                  <span className="size-7 grid place-items-center rounded-full bg-rose-soft text-primary shrink-0">
-                    {isOpen ? <Minus className="size-3.5" /> : <Plus className="size-3.5" />}
-                  </span>
-                </button>
-                <div className={`grid transition-all duration-300 ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
-                  <div className="overflow-hidden">
-                    <p className="px-6 pb-5 text-foreground/65 text-sm leading-relaxed">{f.a}</p>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+    <section id="faq" className="py-24 lg:py-32 bg-background">
+      <div className="max-w-4xl mx-auto px-6 lg:px-10">
+        <h2 className="font-display text-5xl lg:text-6xl uppercase tracking-tight text-center mb-16">
+          Frequently <span className="font-serif-italic normal-case text-rose">Asked</span> Questions
+        </h2>
+        <div className="divide-y divide-border border-y border-border">
+          {faqs.map((f, i) => (
+            <div key={f.q}>
+              <button onClick={() => setOpen(open === i ? null : i)} className="w-full flex items-center justify-between py-6 text-left">
+                <span className="font-display text-lg lg:text-xl uppercase tracking-tight pr-6">{f.q}</span>
+                <ChevronDown className={`size-5 shrink-0 transition-transform ${open === i ? "rotate-180" : ""}`} />
+              </button>
+              {open === i && <p className="pb-6 text-foreground/70 leading-relaxed">{f.a}</p>}
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -426,22 +352,18 @@ function FAQ() {
 /* ---------- FINAL CTA ---------- */
 function FinalCTA() {
   return (
-    <section className="bg-rose-soft py-24 lg:py-32 px-6">
-      <div className="max-w-5xl mx-auto text-center">
-        <h2 className="text-balance text-[clamp(2.5rem,8vw,6.5rem)] font-display uppercase tracking-tight leading-[0.95]">
-          Ready To Bring<br />Your Memories To<br />
-          <span className="font-serif-italic normal-case text-primary">Life?</span>
+    <section className="py-24 lg:py-32 bg-rose text-white relative overflow-hidden grain">
+      <div className="max-w-5xl mx-auto px-6 lg:px-10 text-center">
+        <h2 className="font-display uppercase text-[clamp(2.5rem,7vw,6rem)] leading-[0.95] tracking-tight">
+          Ready To Bring Your <br />
+          <span className="font-serif-italic normal-case">Memories</span> To Life?
         </h2>
-        <p className="mt-7 max-w-xl mx-auto text-foreground/70">
-          Join 10,000+ creators who chose LUMINA to turn their memories into something beautiful. Start your book in under a minute.
+        <p className="mt-8 text-white/80 max-w-2xl mx-auto text-lg">
+          Join 10,000+ creators who trust LUMINA for their most precious stories. Start your first book today and save 15% on your order.
         </p>
-        <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-          <a href="#collections" className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-7 py-4 text-sm font-medium hover:opacity-90 transition">
-            Get Started
-          </a>
-          <a href="#contact" className="inline-flex items-center gap-2 rounded-full bg-ink text-white px-7 py-4 text-sm font-medium hover:opacity-90 transition">
-            Contact Us
-          </a>
+        <div className="mt-10 flex flex-wrap justify-center gap-4">
+          <a href="#pricing" className="bg-white text-rose px-8 py-4 rounded-full font-semibold hover:bg-ink hover:text-white transition">Start Designing</a>
+          <a href="#" className="border border-white/40 px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-rose transition">Contact Us</a>
         </div>
       </div>
     </section>
@@ -450,43 +372,36 @@ function FinalCTA() {
 
 /* ---------- FOOTER ---------- */
 function Footer() {
-  const cols = [
-    { title: "Products", links: ["Photobook", "Travel Book", "Wedding Album", "Magazine"] },
-    { title: "Resources", links: ["Sample Books", "Design Guide", "Pricing", "Blog"] },
-    { title: "Social", links: ["Instagram", "Pinterest", "TikTok", "Facebook"] },
-  ];
   return (
-    <footer className="bg-background border-t border-rose-soft pt-16 pb-8 px-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-[1.6fr_1fr_1fr_1fr] gap-10 pb-12 border-b border-rose-soft">
-          <div>
-            <p className="font-display text-3xl text-primary tracking-tight">LUMINA</p>
-            <p className="mt-4 text-sm text-foreground/65 max-w-xs leading-relaxed">
-              Premium photobooks and custom magazines for life's most beautiful chapters.
-            </p>
+    <footer className="bg-ink-deep text-white/70 pt-20 pb-10">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 grid md:grid-cols-4 gap-12">
+        <div>
+          <div className="font-display text-2xl text-white">LUMINA</div>
+          <p className="mt-4 text-sm leading-relaxed">Premium photobooks and editorial magazines for the modern creator.</p>
+          <div className="mt-6 flex gap-4">
+            <a href="#" aria-label="Instagram"><Instagram className="size-5" /></a>
+            <a href="#" aria-label="Facebook"><Facebook className="size-5" /></a>
+            <a href="#" aria-label="Youtube"><Youtube className="size-5" /></a>
           </div>
-          {cols.map((c) => (
-            <div key={c.title}>
-              <p className="text-[11px] uppercase tracking-[0.22em] font-semibold mb-4">{c.title}</p>
-              <ul className="space-y-2.5">
-                {c.links.map((l) => (
-                  <li key={l}>
-                    <a href="#" className="text-sm text-foreground/70 hover:text-primary transition">{l}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
         </div>
-        <div className="pt-6 flex flex-wrap items-center justify-between gap-3">
-          <p className="text-xs text-foreground/50">© {new Date().getFullYear()} LUMINA. All rights reserved.</p>
-          <div className="flex items-center gap-2">
-            {[Instagram, Facebook, Twitter, Youtube].map((Icon, i) => (
-              <a key={i} href="#" aria-label="Social" className="size-9 grid place-items-center rounded-full bg-rose-soft/60 hover:bg-primary hover:text-primary-foreground transition">
-                <Icon className="size-4" />
-              </a>
-            ))}
+        {[
+          ["PRODUCTS", ["Collections", "Travel Books", "Wedding Albums", "Love Story"]],
+          ["RESOURCES", ["How it Works", "Support Center", "Pricing", "FAQ"]],
+          ["SOCIAL", ["Instagram", "Pinterest", "TikTok", "Facebook"]],
+        ].map(([title, items]) => (
+          <div key={title as string}>
+            <div className="text-xs tracking-[0.2em] font-semibold text-white mb-5">{title as string}</div>
+            <ul className="space-y-3 text-sm">
+              {(items as string[]).map((i) => <li key={i}><a href="#" className="hover:text-rose transition">{i}</a></li>)}
+            </ul>
           </div>
+        ))}
+      </div>
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 mt-16 pt-8 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs text-white/50">
+        <div>© 2026 Lumina Editorial. All rights reserved.</div>
+        <div className="flex gap-6">
+          <a href="#" className="hover:text-white">Privacy Policy</a>
+          <a href="#" className="hover:text-white">Terms of Service</a>
         </div>
       </div>
     </footer>
