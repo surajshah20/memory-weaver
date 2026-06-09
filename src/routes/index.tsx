@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import {
   Star, ArrowRight, Truck, Menu, X,
   Image as ImageIcon, Upload, Wand2,
-  Sparkles, Pencil, FileDown, LayoutTemplate, Package,
+  Sparkles, Pencil, BookOpen, FileDown, LayoutTemplate, Package,
   Check, X as XIcon, ChevronDown,
   Instagram, Facebook, Youtube,
 } from "lucide-react";
