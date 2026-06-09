@@ -76,7 +76,7 @@ function Nav() {
           <Link to="/login" className="text-sm font-medium hover:text-rose">Sign in</Link>
           <Link to="/signup" className="inline-flex items-center gap-2 bg-ink text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-rose transition">
             Get Started
-          </a>
+          </Link>
         </div>
         <button onClick={() => setOpen(!open)} className="md:hidden p-2">
           {open ? <X className="size-5" /> : <Menu className="size-5" />}
