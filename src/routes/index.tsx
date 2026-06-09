@@ -470,11 +470,11 @@ function Footer() {
     <footer className="bg-ink-deep text-white/70 pt-20 pb-10">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 grid md:grid-cols-4 gap-12">
         <div>
-          <div className="font-display text-2xl text-white flex items-center gap-2">
-            <span className="inline-flex size-7 items-center justify-center rounded-md bg-rose text-white">
-              <BookOpen className="size-4" strokeWidth={2.5} />
+          <div className="flex items-center gap-2">
+            <span className="font-display text-2xl text-white tracking-tight">
+              blush<span className="text-rose">book</span>
             </span>
-            Blushbook
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-rose mt-1" />
           </div>
           <p className="mt-4 text-sm leading-relaxed">Custom photobooks, journals and albums — proudly made and delivered across Nepal.</p>
           <div className="mt-6 flex gap-4">
