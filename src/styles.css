@@ -13,9 +13,10 @@
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
 
-  --font-display: "Inter Tight", "Inter", system-ui, sans-serif;
+  --font-display: "Archivo Black", "Inter Tight", system-ui, sans-serif;
   --font-sans: "Inter", system-ui, sans-serif;
-  --font-serif: "Instrument Serif", "Cormorant Garamond", Georgia, serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --color-rose-tint: var(--rose-tint);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -49,10 +50,12 @@
   --radius: 1rem;
 
   /* Brand */
-  --rose: oklch(0.67 0.21 5);          /* #FF4D7D */
-  --rose-soft: oklch(0.92 0.04 5);     /* #F8D9E4 */
-  --ink: oklch(0.18 0.04 265);         /* #0B1023 */
-  --ink-deep: oklch(0.15 0.04 265);    /* #08111F */
+  --rose: oklch(0.62 0.21 5);           /* vivid pink */
+  --rose-soft: oklch(0.93 0.04 5);      /* soft pink */
+  --rose-tint: oklch(0.97 0.018 5);     /* cream-pink hero bg */
+  --ink: oklch(0.25 0.025 40);          /* deep warm brown */
+  --ink-deep: oklch(0.32 0.03 40);      /* brown for testimonials */
+
 
   --background: oklch(1 0 0);
   --foreground: var(--ink);
@@ -95,26 +98,25 @@
 }
 
 @layer base {
-  * {
-    border-color: var(--color-border);
-  }
+  * { border-color: var(--color-border); }
   html { scroll-behavior: smooth; }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
   }
   h1, h2, h3, h4 {
     font-family: var(--font-display);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+    font-weight: 400;
   }
   .font-serif-italic {
     font-family: var(--font-serif);
     font-style: italic;
-    font-weight: 400;
-    letter-spacing: -0.01em;
+    font-weight: 500;
+    letter-spacing: -0.005em;
   }
 }
 
