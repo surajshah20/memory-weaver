@@ -13,9 +13,9 @@
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
 
-  --font-display: "Archivo Black", "Inter Tight", system-ui, sans-serif;
+  --font-display: "Syne", "Inter Tight", system-ui, sans-serif;
   --font-sans: "Inter", system-ui, sans-serif;
-  --font-serif: "Playfair Display", Georgia, serif;
+  --font-serif: "EB Garamond", Georgia, serif;
   --color-rose-tint: var(--rose-tint);
 
   --color-background: var(--background);
@@ -108,9 +108,9 @@
   }
   h1, h2, h3, h4 {
     font-family: var(--font-display);
-    letter-spacing: -0.01em;
-    line-height: 0.95;
-    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    font-weight: 700;
   }
   .font-serif-italic {
     font-family: var(--font-serif);
